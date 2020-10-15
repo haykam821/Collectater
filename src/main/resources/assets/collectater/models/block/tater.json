@@ -1,0 +1,37 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"particle": "#tater"
+	},
+	"elements": [{
+		"from": [5, 0, 5],
+		"to": [11, 10, 11],
+		"faces": {
+			"north": {
+				"uv": [3, 3, 6, 8],
+				"texture": "#tater"
+			},
+			"east": {
+				"uv": [0, 3, 3, 8],
+				"texture": "#tater"
+			},
+			"south": {
+				"uv": [9, 3, 12, 8],
+				"texture": "#tater"
+			},
+			"west": {
+				"uv": [6, 3, 9, 8],
+				"texture": "#tater"
+			},
+			"up": {
+				"uv": [3, 0, 6, 3],
+				"texture": "#tater"
+			},
+			"down": {
+				"uv": [3, 8, 6, 11],
+				"texture": "#tater",
+				"cullface": "up"
+			}
+		}
+	}]
+}

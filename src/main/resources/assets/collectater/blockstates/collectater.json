@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=east": {
+			"model": "collectater:block/collectater",
+			"y": 90
+		},
+		"facing=north": {
+			"model": "collectater:block/collectater"
+		},
+		"facing=south": {
+			"model": "collectater:block/collectater",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "collectater:block/collectater",
+			"y": 270
+		}
+	}
+}

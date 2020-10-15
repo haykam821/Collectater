@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "collectater",
+	"version": "${version}",
+	"name": "Collectater",
+	"description": "Adds taters that can be collected by individual players.",
+	"authors": [
+		"haykam821"
+	],
+	"contact": {
+		"homepage": "https://github.com/haykam821/Collectater#readme",
+		"issues": "https://github.com/haykam821/Collectater/issues"
+	},
+	"entrypoints": {
+		"main": [
+			"io.github.haykam821.collectater.Main"
+		],
+		"client": [
+			"io.github.haykam821.collectater.ClientMain"
+		]
+	},
+	"license": "MIT",
+	"icon": "assets/collectater/icon.png",
+	"depends": {
+		"fabricloader": ">=0.4.0"
+	}
+}
