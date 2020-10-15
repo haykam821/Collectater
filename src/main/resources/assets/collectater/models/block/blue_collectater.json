@@ -1,0 +1,6 @@
+{
+	"parent": "collectater:block/tater",
+	"textures": {
+		"tater": "collectater:block/blue_collectater"
+	}
+}

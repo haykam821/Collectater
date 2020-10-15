@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
+import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -14,7 +15,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public enum ModBlocks {
-	COLLECTATER("collectater", new CollectaterBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).materialColor(MaterialColor.WOOD)));
+	COLLECTATER("collectater", new CollectaterBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).materialColor(MaterialColor.WOOD))),
+	BLUE_COLLECTATER("blue_collectater", new BlueCollectaterBlock(FabricBlockSettings.copy(Blocks.BLUE_WOOL))),
+	TATER_PLATE("tater_plate", new TaterPlateBlock(PressurePlateBlock.ActivationRule.MOBS, FabricBlockSettings.copyOf(Blocks.STONE_PRESSURE_PLATE).materialColor(MaterialColor.BLUE)));
 
 	private final Block block;
 	private final BlockItem item;

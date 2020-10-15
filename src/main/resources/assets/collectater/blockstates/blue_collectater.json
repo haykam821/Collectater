@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"facing=east,tangible=false": {
+			"model": "collectater:block/blue_collectater_intangible",
+			"y": 90
+		},
+		"facing=east,tangible=true": {
+			"model": "collectater:block/blue_collectater",
+			"y": 90
+		},
+		"facing=north,tangible=false": {
+			"model": "collectater:block/blue_collectater_intangible"
+		},
+		"facing=north,tangible=true": {
+			"model": "collectater:block/blue_collectater"
+		},
+		"facing=south,tangible=false": {
+			"model": "collectater:block/blue_collectater_intangible",
+			"y": 180
+		},
+		"facing=south,tangible=true": {
+			"model": "collectater:block/blue_collectater",
+			"y": 180
+		},
+		"facing=west,tangible=false": {
+			"model": "collectater:block/blue_collectater_intangible",
+			"y": 270
+		},
+		"facing=west,tangible=true": {
+			"model": "collectater:block/blue_collectater",
+			"y": 270
+		}
+	}
+}

@@ -30,7 +30,7 @@
 			"down": {
 				"uv": [3, 8, 6, 11],
 				"texture": "#tater",
-				"cullface": "up"
+				"cullface": "down"
 			}
 		}
 	}]

@@ -12,6 +12,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import io.github.haykam821.collectater.Main;
 import io.github.haykam821.collectater.block.ModBlocks;
+import io.github.haykam821.collectater.component.CollectaterGlobalStateComponent;
 import io.github.haykam821.collectater.component.CollectatersComponent;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
@@ -82,6 +83,10 @@ public class CollectaterCommand {
 			.executes(context -> {
 				return CollectaterCommand.list(context, context.getSource().getPlayer());
 			}));
+
+		baseBuilder.then(CommandManager.literal("timer")
+			.then(CommandManager.literal("start")
+			.executes(CollectaterCommand::timerStart)));
 		
 		dispatcher.register(baseBuilder);
 	}
@@ -192,6 +197,14 @@ public class CollectaterCommand {
 		}
 
 		context.getSource().sendFeedback(text, false);
+		return 1;
+	}
+
+	public static int timerStart(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		CollectaterGlobalStateComponent component = Main.COLLECTATER_GLOBAL_STATE.get(context.getSource().getWorld().getLevelProperties());
+		component.startTimer();
+
+		context.getSource().sendFeedback(new TranslatableText("commands.collectater.collectater.timer.start.success"), true);
 		return 1;
 	}
 }

@@ -4,6 +4,7 @@ import io.github.haykam821.collectater.Main;
 import io.github.haykam821.collectater.component.CollectatersComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleEffect;
@@ -23,6 +24,10 @@ import net.minecraft.world.World;
 public class CollectaterBlockEntity extends BlockEntity {
 	private Identifier id;
 
+	public CollectaterBlockEntity(BlockEntityType<?> type) {
+		super(type);
+	}
+
 	public CollectaterBlockEntity() {
 		super(Main.COLLECTATER_BLOCK_ENTITY_TYPE);
 	}
@@ -35,11 +40,16 @@ public class CollectaterBlockEntity extends BlockEntity {
 	}
 
 	private void spawnReactionParticle(ParticleEffect effect) {
-		this.spawnReactionParticle(effect, 0.8);
+		this.spawnReactionParticle(effect, 0.65);
+	}
+
+	public boolean canCollect() {
+		return true;
 	}
 
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (this.id == null) return ActionResult.FAIL;
+		if (!this.canCollect()) return ActionResult.success(false);
 
 		CollectatersComponent component = Main.COLLECTATERS.get(player);
 		if (component.hasCollected(this.id)) {
