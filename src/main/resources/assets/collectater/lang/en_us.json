@@ -12,9 +12,13 @@
 	"commands.collectater.collectater.give.success.multiple": "Gave %s with ID '%s' to %d players",
 	"commands.collectater.collectater.give.success.single": "Gave %s with ID '%s' to %s",
 	"commands.collectater.collectater.list.header": "%s has collected %d collectaters: ",
+	"commands.collectater.collectater.maximum.query": "The current collectater maximum is %d",
+	"commands.collectater.collectater.maximum.set": "Set the collectater maximum to %d",
 	"commands.collectater.collectater.timer.start.success": "Started the global collectater timer",
 	"commands.collectater.collectater.uncollect.failure": "Could not uncollect ID '%s' for %s, as they did not have it",
 	"commands.collectater.collectater.uncollect.success.multiple": "Uncollected ID '%s' for %d players",
 	"commands.collectater.collectater.uncollect.success.single": "Uncollected ID '%s' for %s",
-	"text.collectater.overlay": "%d Taters Collected"
+	"text.collectater.overlay": "%d Taters Collected",
+	"text.collectater.overlay.maximum": "%d of %d Taters Collected",
+	"text.collectater.overlay.singular": "%d Tater Collected"
 }

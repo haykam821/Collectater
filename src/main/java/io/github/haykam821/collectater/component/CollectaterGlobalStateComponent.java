@@ -12,6 +12,7 @@ import net.minecraft.world.WorldProperties;
 
 public class CollectaterGlobalStateComponent implements LevelSyncedComponent {
 	private int timerTicks = 0;
+	private int maximumCollectaters = 0;
 
 	public CollectaterGlobalStateComponent(WorldProperties worldProperties) {
 		return;
@@ -22,17 +23,27 @@ public class CollectaterGlobalStateComponent implements LevelSyncedComponent {
 	}
 
 	public void startTimer() {
-		this.timerTicks = 20 * 24;
+		this.timerTicks = 20 * 16;
+	}
+
+	public int getMaximumCollectaters() {
+		return this.maximumCollectaters;
+	}
+
+	public void setMaximumCollectaters(int maximumCollectaters) {
+		this.maximumCollectaters = maximumCollectaters;
 	}
 
 	@Override
 	public void fromTag(CompoundTag tag) {
 		this.timerTicks = tag.getInt("TimerTicks");
+		this.maximumCollectaters = tag.getInt("MaximumCollectaters");
 	}
 
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
 		tag.putInt("TimerTicks", this.timerTicks);
+		tag.putInt("MaximumCollectaters", this.maximumCollectaters);
 		return tag;
 	}
 
@@ -43,7 +54,7 @@ public class CollectaterGlobalStateComponent implements LevelSyncedComponent {
 
 	public void tick(MinecraftServer server) {
 		if (this.timerTicks > 0) {
-			if (this.timerTicks % 15 == 0 || (this.timerTicks <= 40 && this.timerTicks % 6 == 0)) {
+			if (this.timerTicks % 15 == 0 || (this.timerTicks <= 40 && this.timerTicks % 5 == 0)) {
 				for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
 					player.playSound(SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.RECORDS, 1, 1.2f);
 				}

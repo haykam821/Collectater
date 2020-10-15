@@ -49,7 +49,7 @@ public class CollectaterBlockEntity extends BlockEntity {
 
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (this.id == null) return ActionResult.FAIL;
-		if (!this.canCollect()) return ActionResult.success(false);
+		if (!this.canCollect()) return ActionResult.PASS;
 
 		CollectatersComponent component = Main.COLLECTATERS.get(player);
 		if (component.hasCollected(this.id)) {

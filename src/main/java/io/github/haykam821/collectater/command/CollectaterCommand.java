@@ -87,6 +87,11 @@ public class CollectaterCommand {
 		baseBuilder.then(CommandManager.literal("timer")
 			.then(CommandManager.literal("start")
 			.executes(CollectaterCommand::timerStart)));
+
+		baseBuilder.then(CommandManager.literal("maximum")
+			.then(CommandManager.argument("maximum", IntegerArgumentType.integer(0))
+				.executes(CollectaterCommand::setMaximum))
+			.executes(CollectaterCommand::getMaximum));
 		
 		dispatcher.register(baseBuilder);
 	}
@@ -197,6 +202,25 @@ public class CollectaterCommand {
 		}
 
 		context.getSource().sendFeedback(text, false);
+		return 1;
+	}
+
+	public static int getMaximum(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		CollectaterGlobalStateComponent component = Main.COLLECTATER_GLOBAL_STATE.get(context.getSource().getWorld().getLevelProperties());
+		int maximum = component.getMaximumCollectaters();
+
+		context.getSource().sendFeedback(new TranslatableText("commands.collectater.collectater.maximum.query", maximum), false);
+		return 1;
+	}
+
+	public static int setMaximum(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		CollectaterGlobalStateComponent component = Main.COLLECTATER_GLOBAL_STATE.get(context.getSource().getWorld().getLevelProperties());
+
+		int maximum = IntegerArgumentType.getInteger(context, "maximum");
+		component.setMaximumCollectaters(maximum);
+		component.syncWithAll(context.getSource().getMinecraftServer());
+
+		context.getSource().sendFeedback(new TranslatableText("commands.collectater.collectater.maximum.set", maximum), true);
 		return 1;
 	}
 
