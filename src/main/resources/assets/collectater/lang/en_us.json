@@ -14,6 +14,7 @@
 	"commands.collectater.collectater.list.header": "%s has collected %d collectaters: ",
 	"commands.collectater.collectater.maximum.query": "The current collectater maximum is %d",
 	"commands.collectater.collectater.maximum.set": "Set the collectater maximum to %d",
+	"commands.collectater.collectater.timer.set.success": "Set the global collectater timer to %d ticks",
 	"commands.collectater.collectater.timer.start.success": "Started the global collectater timer",
 	"commands.collectater.collectater.uncollect.failure": "Could not uncollect ID '%s' for %s, as they did not have it",
 	"commands.collectater.collectater.uncollect.success.multiple": "Uncollected ID '%s' for %d players",

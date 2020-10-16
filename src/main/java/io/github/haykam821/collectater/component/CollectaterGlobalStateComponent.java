@@ -26,6 +26,10 @@ public class CollectaterGlobalStateComponent implements LevelSyncedComponent {
 		this.timerTicks = 20 * 16;
 	}
 
+	public void setTimer(int ticks) {
+		this.timerTicks = ticks;
+	}
+
 	public int getMaximumCollectaters() {
 		return this.maximumCollectaters;
 	}

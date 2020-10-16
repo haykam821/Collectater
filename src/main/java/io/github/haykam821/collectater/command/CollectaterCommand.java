@@ -106,7 +106,12 @@ public class CollectaterCommand {
 		registerSubcommand("timer", baseBuilder, builder -> {
 			builder
 				.then(CommandManager.literal("start")
-				.executes(CollectaterCommand::timerStart));
+				.executes(CollectaterCommand::startTimer));
+
+			builder
+				.then(CommandManager.literal("set")
+					.then(CommandManager.argument("ticks", IntegerArgumentType.integer(0))
+					.executes(CollectaterCommand::setTimer)));
 		});
 
 		// Set/get maximum
@@ -255,7 +260,17 @@ public class CollectaterCommand {
 		return 1;
 	}
 
-	public static int timerStart(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+	public static int setTimer(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		CollectaterGlobalStateComponent component = Main.COLLECTATER_GLOBAL_STATE.get(context.getSource().getWorld().getLevelProperties());
+		
+		int ticks = IntegerArgumentType.getInteger(context, "ticks");
+		component.setTimer(ticks);
+
+		context.getSource().sendFeedback(new TranslatableText("commands.collectater.collectater.timer.set.success", ticks), true);
+		return 1;
+	}
+
+	public static int startTimer(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		CollectaterGlobalStateComponent component = Main.COLLECTATER_GLOBAL_STATE.get(context.getSource().getWorld().getLevelProperties());
 		component.startTimer();
 
