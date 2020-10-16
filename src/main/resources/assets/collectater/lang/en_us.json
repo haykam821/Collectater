@@ -18,6 +18,7 @@
 	"commands.collectater.collectater.uncollect.failure": "Could not uncollect ID '%s' for %s, as they did not have it",
 	"commands.collectater.collectater.uncollect.success.multiple": "Uncollected ID '%s' for %d players",
 	"commands.collectater.collectater.uncollect.success.single": "Uncollected ID '%s' for %s",
+	"itemGroup.collectater.collectaters": "Collectaters",
 	"text.collectater.overlay": "%d Taters Collected",
 	"text.collectater.overlay.maximum": "%d of %d Taters Collected",
 	"text.collectater.overlay.singular": "%d Tater Collected"

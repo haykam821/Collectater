@@ -41,7 +41,7 @@ public enum ModBlocks {
 	}
 
 	private ModBlocks(String path, Block block) {
-		this(path, block, new BlockItem(block, new Item.Settings()));
+		this(path, block, Main.COLLECTATERS_ITEM_GROUP);
 	}
 
 	public Block getBlock() {

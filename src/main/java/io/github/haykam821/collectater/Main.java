@@ -11,15 +11,24 @@ import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.event.EntityComponentCallback;
 import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class Main implements ModInitializer {
 	public static final String MOD_ID = "collectater";
+
+	// Item group
+	private static final Identifier COLLECTATERS_ID = new Identifier(MOD_ID, "collectaters");
+	public static final ItemGroup COLLECTATERS_ITEM_GROUP = FabricItemGroupBuilder.build(COLLECTATERS_ID, () -> {
+		return new ItemStack(ModBlocks.COLLECTATER.getItem());
+	});
 
 	// Block entities
 	private static final Identifier COLLECTATER_BLOCK_ENTITY_TYPE_ID = new Identifier(MOD_ID, "collectater");
@@ -33,7 +42,6 @@ public class Main implements ModInitializer {
 		.build(null);
 
 	// Components
-	private static final Identifier COLLECTATERS_ID = new Identifier(MOD_ID, "collectaters");
 	public static final ComponentType<CollectatersComponent> COLLECTATERS = ComponentRegistry.INSTANCE
 			.registerIfAbsent(COLLECTATERS_ID, CollectatersComponent.class)
 			.attach(EntityComponentCallback.event(PlayerEntity.class), CollectatersComponent::new);
