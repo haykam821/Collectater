@@ -3,6 +3,7 @@ package io.github.haykam821.collectater.command;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -32,68 +33,98 @@ public class CollectaterCommand {
 			return source.hasPermissionLevel(2);
 		});
 
-		baseBuilder.then(CommandManager.literal("give")
-			.then(CommandManager.argument("id", IdentifierArgumentType.identifier())
-				.then(CommandManager.argument("targets", EntityArgumentType.players())
-					.then(CommandManager.argument("count", IntegerArgumentType.integer(1))
+		// Give a collectater stack
+		registerSubcommand("give", baseBuilder, builder -> {
+			builder
+				.then(CommandManager.argument("id", IdentifierArgumentType.identifier())
+				.executes(context -> {
+					return CollectaterCommand.give(context, Collections.singleton(context.getSource().getPlayer()), 1);
+				})
+					.then(CommandManager.argument("targets", EntityArgumentType.players())
 					.executes(context -> {
-						return CollectaterCommand.give(context, EntityArgumentType.getPlayers(context, "targets"), IntegerArgumentType.getInteger(context, "count"));
-					}))
-				.executes(context -> {
-					return CollectaterCommand.give(context, EntityArgumentType.getPlayers(context, "targets"), 1);
-				}))
-			.executes(context -> {
-				return CollectaterCommand.give(context, Collections.singleton(context.getSource().getPlayer()), 1);
-			})));
+						return CollectaterCommand.give(context, EntityArgumentType.getPlayers(context, "targets"), 1);
+					})
+						.then(CommandManager.argument("count", IntegerArgumentType.integer(1))
+						.executes(context -> {
+							return CollectaterCommand.give(context, EntityArgumentType.getPlayers(context, "targets"), IntegerArgumentType.getInteger(context, "count"));
+						}))));
+		});
 
-		baseBuilder.then(CommandManager.literal("collect")
-			.then(CommandManager.argument("id", IdentifierArgumentType.identifier())
+		// Collect a collectater
+		registerSubcommand("collect", baseBuilder, builder -> {
+			builder
+				.then(CommandManager.argument("id", IdentifierArgumentType.identifier())
+				.executes(context -> {
+					return CollectaterCommand.collect(context, Collections.singleton(context.getSource().getPlayer()));
+				})
+					.then(CommandManager.argument("targets", EntityArgumentType.players())
+					.executes(context -> {
+						return CollectaterCommand.collect(context, EntityArgumentType.getPlayers(context, "targets"));
+					})));
+		});
+
+		// Uncollect a collectater
+		registerSubcommand("uncollect", baseBuilder, builder -> {
+			builder
+				.then(CommandManager.argument("id", IdentifierArgumentType.identifier())
+				.executes(context -> {
+					return CollectaterCommand.uncollect(context, Collections.singleton(context.getSource().getPlayer()));
+				})
+					.then(CommandManager.argument("targets", EntityArgumentType.players())
+					.executes(context -> {
+						return CollectaterCommand.uncollect(context, EntityArgumentType.getPlayers(context, "targets"));
+					})));
+		});
+
+		// Clear collectater
+		registerSubcommand("clear", baseBuilder, builder -> {
+			builder
 				.then(CommandManager.argument("targets", EntityArgumentType.players())
 				.executes(context -> {
-					return CollectaterCommand.collect(context, EntityArgumentType.getPlayers(context, "targets"));
-				}))
-			.executes(context -> {
-				return CollectaterCommand.collect(context, Collections.singleton(context.getSource().getPlayer()));
-			})));
+					return CollectaterCommand.clear(context, Collections.singleton(context.getSource().getPlayer()));
+				}));
+			
+			builder.executes(context -> {
+				return CollectaterCommand.clear(context, EntityArgumentType.getPlayers(context, "targets"));
+			});
+		});
 
-		baseBuilder.then(CommandManager.literal("uncollect")
-			.then(CommandManager.argument("id", IdentifierArgumentType.identifier())
-				.then(CommandManager.argument("targets", EntityArgumentType.players())
-				.executes(context -> {
-					return CollectaterCommand.uncollect(context, EntityArgumentType.getPlayers(context, "targets"));
-				}))
-			.executes(context -> {
-				return CollectaterCommand.uncollect(context, Collections.singleton(context.getSource().getPlayer()));
-			})));
-
-		baseBuilder.then(CommandManager.literal("clear")
-			.then(CommandManager.argument("targets", EntityArgumentType.players())
-				.executes(context -> {
-					return CollectaterCommand.clear(context, EntityArgumentType.getPlayers(context, "targets"));
-				}))
-			.executes(context -> {
-				return CollectaterCommand.clear(context, Collections.singleton(context.getSource().getPlayer()));
-			}));
-
-		baseBuilder.then(CommandManager.literal("list")
-			.then(CommandManager.argument("target", EntityArgumentType.player())
+		// List collectaters
+		registerSubcommand("list", baseBuilder, builder -> {
+			builder
+				.then(CommandManager.argument("target", EntityArgumentType.player())
 				.executes(context -> {
 					return CollectaterCommand.list(context, EntityArgumentType.getPlayer(context, "target"));
-				}))
-			.executes(context -> {
+				}));
+
+			builder.executes(context -> {
 				return CollectaterCommand.list(context, context.getSource().getPlayer());
-			}));
+			});
+		});
 
-		baseBuilder.then(CommandManager.literal("timer")
-			.then(CommandManager.literal("start")
-			.executes(CollectaterCommand::timerStart)));
+		// Start timer
+		registerSubcommand("timer", baseBuilder, builder -> {
+			builder
+				.then(CommandManager.literal("start")
+				.executes(CollectaterCommand::timerStart));
+		});
 
-		baseBuilder.then(CommandManager.literal("maximum")
-			.then(CommandManager.argument("maximum", IntegerArgumentType.integer(0))
-				.executes(CollectaterCommand::setMaximum))
-			.executes(CollectaterCommand::getMaximum));
+		// Set/get maximum
+		registerSubcommand("maximum", baseBuilder, builder -> {
+			builder
+				.then(CommandManager.argument("maximum", IntegerArgumentType.integer(0))
+				.executes(CollectaterCommand::setMaximum));
+
+			builder.executes(CollectaterCommand::getMaximum);
+		});
 		
 		dispatcher.register(baseBuilder);
+	}
+
+	private static void registerSubcommand(String literal, LiteralArgumentBuilder<ServerCommandSource> baseBuilder, Consumer<LiteralArgumentBuilder<ServerCommandSource>> consumer) {
+		LiteralArgumentBuilder<ServerCommandSource> subBuilder = CommandManager.literal(literal);
+		consumer.accept(subBuilder);
+		baseBuilder.then(subBuilder);
 	}
 
 	private static ItemStack getCollectaterStack(Identifier id) {
